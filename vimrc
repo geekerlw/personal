@@ -78,8 +78,8 @@ au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest
 
 " keybindings for plugins toggle
-nnoremap <C-L> :TlistToggle<cr>
-nnoremap <C-M> :NERDTreeToggle<cr>
+nnoremap <C-l> :TlistToggle<cr>
+nnoremap <C-n> :NERDTreeToggle<cr>
 " build tags of your own project with F2 
 nmap <F6> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ./<cr> 
 " build cscope of your own project with F3
