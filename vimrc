@@ -1,4 +1,6 @@
 " enable filetype dectection and ft specific plugin/indent
+set nocp
+filetype plugin on
 filetype plugin indent on
 
 " enable syntax hightlight and completion
@@ -15,7 +17,6 @@ set number
 set showcmd
 
 " default indentation
-set autoindent
 set cindent
 set smartindent
 set tabstop=4
@@ -41,3 +42,18 @@ else
 		exe "cs add" cs_db cs_dir
 	endif
 endif
+
+set completeopt=menu
+
+" OmniCppComplete
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1
+let OmniCpp_MayCompleteDot = 1 
+let OmniCpp_MayCompleteArrow = 1
+let OmniCpp_MayCompleteScope = 1
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" auto close complete windows
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest
