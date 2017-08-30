@@ -3,9 +3,12 @@ source $VIMRUNTIME/vimrc_example.vim
 
 " enable filetype dectection and ft specific plugin/indent
 set nocp
-set nobackup
 filetype plugin on
 filetype plugin indent on
+
+" disable backup and undofiles
+set nobackup
+set noundofile
 
 " enable syntax hightlight and completion
 syntax on
