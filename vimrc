@@ -1,6 +1,9 @@
 " source the example set
 source $VIMRUNTIME/vimrc_example.vim
 
+" vim color scheme set
+colorscheme molokai
+
 " enable filetype dectection and ft specific plugin/indent
 set nocp
 filetype plugin on
