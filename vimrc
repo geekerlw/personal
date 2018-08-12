@@ -1,11 +1,39 @@
+"
+" Author: Steven Lee <geekerlw@gmail.com>
+"
+
+" vim plugin manager
+call plug#begin('~/.vim/plugged')
+
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'dyng/ctrlsf.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'Valloric/YouCompleteMe'
+Plug 'junegunn/vim-easy-align'
+Plug 'jiangmiao/auto-pairs'
+Plug 'easymotion/vim-easymotion'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'flazz/vim-colorschemes'
+Plug 'airblade/vim-gitgutter'
+Plug 'ludovicchabant/vim-gutentags'
+
+call plug#end()
+
 " source the example set
 source $VIMRUNTIME/vimrc_example.vim
 
 " vim color scheme set
 colorscheme molokai
+set t_Co=256
 
 " enable filetype dectection and ft specific plugin/indent
 set nocp
+filetype on
 filetype plugin on
 filetype plugin indent on
 
@@ -23,13 +51,9 @@ set ignorecase
 set smartcase
 
 " editor setting
-" set title
-set mouse=a
+set mouse+=a
 set number
 set showcmd
-
-"Paste toggle - when pasting something in, don't indent.
-set pastetoggle=<F3>
 
 " default indentation
 set smartindent
@@ -38,66 +62,57 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 
-" auto add ctags
-set tags=tags;
-set autochdir
+" tagbar left
+let g:tagbar_left = 1
 
-" taglist sets
-let Tlist_Show_One_File=0
-let Tlist_Exit_OnlyWindow=1
-let Tlist_File_FOLD_Auto_Close=1
+" guentags setting
+let g:gutentags_project_root = ['.root', '.git']
+let g:gutentags_cache_dir    = expand('~/.cache/tags')
 
-" Nerd Tree
-let NERDChristmasTree=0
-let NERDTreeWinSize=30
-let NERDTreeChDirMode=2
-let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
-" let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\~$']
-let NERDTreeShowBookmarks=1
-let NERDTreeWinPos = "right"
+" Nerd Tree right
+let NERDChristmasTree     = 0
+let NERDTreeWinSize       = 30
+let NERDTreeChDirMode     = 2
+let NERDTreeIgnore        = ['\~$', '\.pyc$', '\.swp$']
+let NERDTreeShowBookmarks = 1
+let NERDTreeWinPos        = "right"
 
-" auto load cscope
-if !has("cscope")
-	finish
-endif
-function! LoadCscope()
-	let db = findfile("cscope.out", ".;")
-	if (!empty(db))
-		let path = strpart(db, 0, match(db, "/cscope.out$"))
-		set nocscopeverbose " suppress 'duplicate connection' error
-		exe "cs add " . db . " " . path
-		set cscopeverbose
-	endif
-endfunction
-au VimEnter * call LoadCscope()
+" nerd comment setting
+let g:NERDSpaceDelims            = 1
+let g:NERDCompactSexyComs        = 1
+let g:NERDDefaultAlign           = 'left'
+let g:NERDAltDelims_java         = 1
+let g:NERDCustomDelimiters       = { 'c': { 'left': '/**','right': '*/' } }
+let g:NERDCommentEmptyLines      = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDToggleCheckAllLines    = 1
 
-" OmniCppComplete
-" autocmd FileType c setlocal omnifunc=ccomplete#Complete
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1
-let OmniCpp_MayCompleteDot = 1 
-let OmniCpp_MayCompleteArrow = 1
-let OmniCpp_MayCompleteScope = 1
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-" auto close complete windows
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-set completeopt=menuone,menu,longest
+" airline sets
+let g:airline_theme = 'molokai'
+
+" *** key binds ***
+" Paste toggle - when pasting something in, don't indent.
+set pastetoggle=<F3>
+
+" Ctrlsf search key bind
+nmap <F4> :CtrlSF<Space>
+nmap <F5> :CtrlSFOpen<cr>
+
+" build tags of your own project with F6
+nmap <F6> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ./<cr>
 
 " keybindings for plugins toggle
-nnoremap <C-l> :TlistToggle<cr>
+nnoremap <C-l> :TagbarToggle<cr>
+" nnoremap <C-l> :TlistToggle<cr>
 nnoremap <C-n> :NERDTreeToggle<cr>
-" build tags of your own project with F2 
-nmap <F6> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q ./<cr> 
-" build cscope of your own project with F3
-nmap <F7> :!cscope -kbqR <cr>
-" keybindings for cscope find funcs
-nmap <C-\>s :cs f s <C-R>=expand("<cword>")<CR><cr>
-nmap <C-\>g :cs f g <C-R>=expand("<cword>")<CR><cr>
-nmap <C-\>c :cs f c <C-R>=expand("<cword>")<CR><cr>
-nmap <C-\>t :cs f t <C-R>=expand("<cword>")<CR><cr>
-nmap <C-\>e :cs f e <C-R>=expand("<cword>")<CR><cr>
-nmap <C-\>f :cs f f <C-R>=expand("<cword>")<CR><cr>
-nmap <C-\>i :cs f i <C-R>=expand("<cword>")<CR><cr>
-nmap <C-\>d :cs f d <C-R>=expand("<cword>")<CR><cr>
+
+" easy align key binds
+xmap ea <Plug>(EasyAlign)
+nmap ea <Plug>(EasyAlign)
+
+" easy motion key binds
+map f2 <Plug>(easymotion-s2)
+map fn <Plug>(easymotion-sn)
+
+" ctrlsp key binds
+vmap <C-f> <Plug>CtrlSFVwordExec
