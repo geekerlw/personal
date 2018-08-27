@@ -13,6 +13,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'dyng/ctrlsf.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'Valloric/YouCompleteMe'
+Plug 'rdnetto/ycm-generator', { 'branch': 'stable' }
 Plug 'junegunn/vim-easy-align'
 Plug 'jiangmiao/auto-pairs'
 Plug 'easymotion/vim-easymotion'
@@ -69,6 +70,10 @@ let g:tagbar_left = 1
 let g:gutentags_project_root = ['.root', '.git']
 let g:gutentags_cache_dir    = expand('~/.cache/tags')
 
+" ycm setting
+let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
+let g:ycm_autoclose_preview_window_after_complete = 1
+
 " Nerd Tree right
 let NERDChristmasTree     = 0
 let NERDTreeWinSize       = 30
@@ -116,3 +121,7 @@ map fn <Plug>(easymotion-sn)
 
 " ctrlsp key binds
 vmap <C-f> <Plug>CtrlSFVwordExec
+
+" ycm key binds
+nnoremap <F11> :YcmCompleter GoToDeclaration<cr>
+nnoremap <F12> :YcmCompleter GoToDefinition<cr>
