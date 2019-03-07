@@ -132,8 +132,13 @@
         init: function () {
             S.Drawing.init('.canvas');
             document.body.classList.add('body--ready');
-            S.UI.simulate("I love three things in this world|Sun, Moon and You|Sun for morning, Moon for night|And You Forever|浮世三千，吾爱有三|日、月与卿|日为朝、月为暮|卿为朝朝暮暮|#countdown 3|京蔓，我 爱 你|#time");
-            S.Drawing.loop(function () {
+			if(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+				S.UI.simulate("I|Love|Three|Things|In|This|World|Sun|Moon|And|You|Sun|For|Morning|Moon|For|Night|And|You|Forever|浮|世|三|千|吾|爱|有|三|日|月|与|卿|日|为|朝|月|为|暮|卿|为|朝|朝|暮|暮|#countdown 3|京|蔓|I|LOVE|YOU|#time");
+			}
+			else {
+				S.UI.simulate("I love three things in this world|Sun, Moon and You|Sun for morning, Moon for night|And You Forever|浮世三千，吾爱有三|日、月与卿|日为朝、月为暮|卿为朝朝暮暮|#countdown 3|京蔓，我 爱 你|#time");
+            }
+			S.Drawing.loop(function () {
                 S.Shape.render();
             });
         }
@@ -432,10 +437,10 @@
 
 
     S.ShapeBuilder = (function () {
-        var gap = 13,
+        var gap = 9,
             shapeCanvas = document.createElement('canvas'),
             shapeContext = shapeCanvas.getContext('2d'),
-            fontSize = 500,
+            fontSize = 300,
             fontFamily = 'Avenir, Helvetica Neue, Helvetica, Arial, sans-serif';
 
         function fit() {
